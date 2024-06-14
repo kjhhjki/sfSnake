@@ -55,6 +55,8 @@ namespace sfSnake
 
 			unsigned getScore() const { return score; }
 			unsigned getSize() const;
+
+			const std::vector<SnakeNode>& getNodes() const { return nodes_; }
 	};
 }
 

@@ -76,15 +76,11 @@ int Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 	{
 		if (it->getBounds().intersects(nodes_[0].getBounds()))
 		{
-			// std::cout << "Collision detected" << std::endl;
 			pickupSound_.play();
 			int col = it->getColor();
-			// std::cout << col << " Grows needed" << std::endl;
-			for(int i = 0; i < col; ++i) grow(); //, std::cout << "Snake grown" << std::endl;
+			for(int i = 0; i < col; ++i) grow();
 			++score;
-			// std::cout << "Score: " << score << std::endl;
 			fruits.erase(it);
-			// std::cout << "Fruit erased" << std::endl;
 			return col;
 		}
 	}

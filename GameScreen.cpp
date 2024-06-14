@@ -62,6 +62,17 @@ void GameScreen::generateFruit(int col)
 {
 	static std::uniform_int_distribution<int> xDistribution(SnakeNode::radius_*2, Game::Width - SnakeNode::radius_*2);
 	static std::uniform_int_distribution<int> yDistribution(SnakeNode::radius_*2, Game::Height - SnakeNode::radius_*2);
-	fruit_.push_back(Fruit(sf::Vector2f(xDistribution(random), yDistribution(random)), col));
+	double x = 0, y = 0;
+	while(1)
+	{
+		x = xDistribution(random);
+		y = yDistribution(random);
+		sf::CircleShape tmp(Fruit::Radius);
+		for(auto &node: snake_.getNodes())
+			if(tmp.getGlobalBounds().intersects(node.getBounds())) 
+				continue;
+		fruit_.push_back(Fruit(sf::Vector2f(xDistribution(random), yDistribution(random)), col));
+		return;
+	}
 }
 
