@@ -78,7 +78,7 @@ int Snake::checkFruitCollisions(std::vector<Fruit>& fruits)
 		{
 			pickupSound_.play();
 			int col = it->getColor();
-			for(int i = 0; i < col; ++i) grow();
+			for(int i = 1; i < col; ++i) grow();
 			++score;
 			fruits.erase(it);
 			return col;
