@@ -7,12 +7,14 @@
 
 using namespace sfSnake;
 
-const sf::Time Game::TimePerFrame = sf::seconds(1.f / 10.f);
+const sf::Time Game::TimePerFrame = sf::seconds(1. / 15);
 
 std::shared_ptr<Screen> Game::Screen = std::make_shared<MenuScreen>();
 
-Game::Game()
-: window_(sf::VideoMode(Game::Width, Game::Height), "sfSnake")
+sf::Color Game::backgrondColor = sf::Color::Black, Game::lineColor = sf::Color::Black;
+bool Game::grid = false;
+
+Game::Game(): window_(sf::VideoMode(Game::Width, Game::Height), "sfSnake")
 {
 	bgMusic_.openFromFile("Music/bg_music.wav");
 	bgMusic_.setLoop(true);
@@ -24,10 +26,8 @@ void Game::handleInput()
 	sf::Event event;
 
 	while (window_.pollEvent(event))
-	{
 		if (event.type == sf::Event::Closed)
 			window_.close();
-	}
 
 	Game::Screen->handleInput(window_);
 }
@@ -39,7 +39,7 @@ void Game::update(sf::Time delta)
 
 void Game::render()
 {
-	window_.clear();
+	window_.clear(backgrondColor);
 	Game::Screen->render(window_);
 	window_.display();
 }

@@ -11,48 +11,51 @@
 
 namespace sfSnake
 {
-	enum class Direction
+	struct Direction
 	{
-		Left, Right, Up, Down
+		double x, y;
+		Direction(double x, double y): x(x), y(y) {}
 	};
 
-class Snake
-{
-public:
-	Snake();
+	class Snake
+	{
+		private:
 
-	void handleInput();
-	void update(sf::Time delta);
-	void render(sf::RenderWindow& window);
+			sf::Vector2f position_;
+			Direction direction_;
 
-	void checkFruitCollisions(std::vector<Fruit>& fruits);
+			sf::SoundBuffer pickupBuffer_;
+			sf::Sound pickupSound_;
 
-	bool hitSelf() const;
+			sf::SoundBuffer dieBuffer_;
+			sf::Sound dieSound_;
 
-	unsigned getSize() const;
+			std::vector<SnakeNode> nodes_;
 
-private:
-	void move();
-	void grow();
-	void checkEdgeCollisions();
-	void checkSelfCollisions();
-	void initNodes();
+			static const int InitialSize;
+			unsigned score = 0;
+			bool hitSelf_;
 
-	bool hitSelf_;
+			void move();
+			void grow();
+			void checkEdgeCollisions();
+			void checkSelfCollisions();
+			void initNodes();
+			
+		public:
+			Snake();
 
-	sf::Vector2f position_;
-	Direction direction_;
+			void handleInput(const sf::RenderWindow &);
+			void update(sf::Time delta);
+			void render(sf::RenderWindow &window);
 
-	sf::SoundBuffer pickupBuffer_;
-	sf::Sound pickupSound_;
+			int checkFruitCollisions(std::vector<Fruit>& fruits);
 
-	sf::SoundBuffer dieBuffer_;
-	sf::Sound dieSound_;
+			bool hitSelf() const;
 
-	std::vector<SnakeNode> nodes_;
-
-	static const int InitialSize;
-};
+			unsigned getScore() const { return score; }
+			unsigned getSize() const;
+	};
 }
 
 #endif
